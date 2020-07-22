@@ -14,9 +14,11 @@ def reader(filename):
 
         regex_playString = "(.*nuance_prompter_IPrompter_playString IPrompter_instance='SDS_prompter' " \
                            "IPrompt_instance='IPrompt_)(?!.*wav.*)"
+        list_Play = []
+        list_Play.append(re.findall(regex_playString, log)[-1])
 
-        # picks only response log lines. Ignores toneup and tonedown. Gives a playstring list
-        ts_playString = unique(re.findall(regex_playString, log))
+        ts_playString = unique(
+            list_Play)  # picks only response log lines. Ignores toneup and tonedown. Gives a playstring list
 
         print 'Session start: ', ts_PTT, 'Session end: ', ts_playString
         return latency(ts_PTT, ts_playString)
