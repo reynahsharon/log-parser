@@ -13,7 +13,7 @@ def reader(filename):
         ts_PTT = unique(list_PTT)  # finds the last final ASR result timestamp
 
         regex_playString = "(.*nuance_prompter_IPrompter_playString IPrompter_instance='SDS_prompter' " \
-                           "IPrompt_instance='IPrompt_)(?!.*wav.*)"
+                           "IPrompt_instance='IPrompt_)"
         list_Play = []
         list_Play.append(re.findall(regex_playString, log)[-1])
 
