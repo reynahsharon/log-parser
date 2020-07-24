@@ -48,10 +48,19 @@ def write_csv(latency_list):
 
 
 # function to open log file and perform parsing
-def log_reader(filename):
+def log_reader(filename, target_name):
     with open(filename) as f:
         log = f.read()
-        block_regex = "EVNT GDM NAME=PTT hmi_active_screen=HMI_ACTIVE_NONE[\w\W]*?Scheduled event after flush: N"
+        if target_name.lower() == 'dten':
+            block_regex = "EVNT GDM NAME=PTT hmi_active_screen=HMI_ACTIVE_NONE[\w\W]*?Scheduled event after flush: N"
+        else:
+            block_regex = "EVNT GDM NAME=PTT hmi_active_screen='HMI_ACTIVE_NONE'[\w\W]*?Scheduled event after flush: N"
+
+        # Dten
+        # block_regex = "EVNT GDM NAME=PTT hmi_active_screen=HMI_ACTIVE_NONE[\w\W]*?Scheduled event after flush: N"
+        # PANASONIC
+        # block_regex = "EVNT GDM NAME=PTT hmi_active_screen='HMI_ACTIVE_NONE'[\w\W]*?Scheduled event after flush: N"
+
         regex_PTT = ".*beginSpeechFrame"
         regex_playString = "(.*nuance_prompter_IPrompter_playString IPrompter_instance='SDS_prompter' " \
                            "IPrompt_instance='IPrompt_)(?!.*wav.*)"
@@ -78,4 +87,5 @@ def log_reader(filename):
 
 # main function
 if __name__ == '__main__':
-    log_reader('log')
+    target_name = 'pan'  # TODO: Enter either dten or pan
+    log_reader('log', target_name)
