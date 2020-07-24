@@ -62,7 +62,9 @@ def write_csv(latency):
 
         writer.writerow(header)
 
-        writer.writerow(('Play FM', latency))  # TODO: Enter correct command
+        writer.writerow(('Play MJ', 2683))  # TODO: Enter correct command
+        writer.writerow(('Play MJ', 2659))  # TODO: Enter correct command
+        writer.writerow(('Play MJ', latency))  # TODO: Enter correct command
 
 
 # main function

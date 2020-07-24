@@ -62,11 +62,45 @@ def write_csv(latency):
 
         writer.writerow(header)
 
-        writer.writerow(('Play FM', latency))  # TODO: Enter correct command
+        # writer.writerow(('Number 1', 2109))  # TODO: Enter correct command
+        # writer.writerow(('Number 1', 2702))  # TODO: Enter correct command
+        writer.writerow(('Number 2', 2526))  # TODO: Enter correct command
+        writer.writerow(('Number 2', latency))  # TODO: Enter correct command
+
+
+def file_splitter(filename):
+    with open(filename) as f:
+        log = f.read()
+        block_regex = "EVNT GDM NAME=PTT hmi_active_screen=HMI_ACTIVE_NONE[\w\W]*?Scheduled event after flush: N"
+        regex_PTT = ".*beginSpeechFrame"
+        ts_PTT_list = []
+        ts_playString_list = []
+        result = re.findall(block_regex, log)
+        for block in result:
+            list_PTT = []
+            list_PTT.append(re.findall(regex_PTT, block)[-1])
+            ts_PTT = unique(list_PTT)
+            ts_PTT_list.append(ts_PTT)
+            print 'ts_PTT: ', ts_PTT
+        for block in result:
+            regex_playString = "(.*nuance_prompter_IPrompter_playString IPrompter_instance='SDS_prompter' " \
+                               "IPrompt_instance='IPrompt_)(?!.*wav.*)"
+            list_Play = []
+            list_Play.append(re.findall(regex_playString, block)[-1])
+
+            ts_playString = unique(list_Play)
+            ts_playString_list.append(ts_playString)
+            print 'ts_playString', ts_playString
+
+    print ts_PTT_list
+    print ts_playString_list
+    # print result
+    # print len(result)
 
 
 # main function
 if __name__ == '__main__':
-    response_timestamp = reader('log')
-    print 'Latency: ', response_timestamp
-    write_csv(response_timestamp)
+    # response_timestamp = reader('log')
+    # print 'Latency: ', response_timestamp
+    # write_csv(response_timestamp)
+    file_splitter('log')
