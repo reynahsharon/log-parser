@@ -1,3 +1,2 @@
-Utterance,Latency(milliseconds)
-Number 2,2526
-Number 2,1316
+Utterance,No. of attempts,AVG(ms),MIN(ms),MAX(ms)
+Number 2,3,2688,2527,2777
