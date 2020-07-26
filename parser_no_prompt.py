@@ -83,5 +83,5 @@ def log_reader(filename, sessionType):
 
 # main function
 if __name__ == '__main__':
-    sessionType = 'WUW'
+    sessionType = 'PTT'  # TODO: Mention WUW or PTT
     log_reader('log', sessionType)
