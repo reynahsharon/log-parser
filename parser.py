@@ -38,28 +38,24 @@ def write_csv(latency_list):
     max_latency = max(latency_list)
     average_latency = sum(latency_list) / len(latency_list)
     attempts_count = len(latency_list)
-    utterance = 'Number 2'  # TODO: Enter correct command
+    utterance = 'dialog_call_contact'  # TODO: Enter correct command
+    print '[Min : ', min_latency, 'Max : ', max_latency, 'AVG : ', average_latency, ']'
     with open('output.csv', 'wb') as csvfile:
         writer = csv.writer(csvfile)
-        header = ['Utterance', 'No. of attempts', 'AVG(ms)', 'MIN(ms)', 'MAX(ms)']
+        header = ['Utterance', 'No. of attempts', 'Latency list', 'AVG(ms)', 'MIN(ms)', 'MAX(ms)']
         writer.writerow(header)
         writer.writerow(
-            (utterance, attempts_count, average_latency, min_latency, max_latency))
+            (utterance, attempts_count, latency_list, average_latency, min_latency, max_latency))
 
 
 # function to open log file and perform parsing
-def log_reader(filename, target_name):
+def log_reader(filename, sessionType):
     with open(filename) as f:
         log = f.read()
-        if target_name.lower() == 'dten':
-            block_regex = "EVNT GDM NAME=PTT hmi_active_screen=HMI_ACTIVE_NONE[\w\W]*?Scheduled event after flush: N"
+        if sessionType.lower() == 'wuw':
+            block_regex = "PREPARING => STARTING_RECOGNITION[\w\W]*?Scheduled event after flush: N"
         else:
-            block_regex = "EVNT GDM NAME=PTT hmi_active_screen='HMI_ACTIVE_NONE'[\w\W]*?Scheduled event after flush: N"
-
-        # Dten
-        # block_regex = "EVNT GDM NAME=PTT hmi_active_screen=HMI_ACTIVE_NONE[\w\W]*?Scheduled event after flush: N"
-        # PANASONIC
-        # block_regex = "EVNT GDM NAME=PTT hmi_active_screen='HMI_ACTIVE_NONE'[\w\W]*?Scheduled event after flush: N"
+            block_regex = "EVNT GDM NAME=PTT hmi_active_screen[\w\W]*?Scheduled event after flush: N"
 
         regex_PTT = ".*beginSpeechFrame"
         regex_playString = "(.*nuance_prompter_IPrompter_playString IPrompter_instance='SDS_prompter' " \
@@ -87,5 +83,5 @@ def log_reader(filename, target_name):
 
 # main function
 if __name__ == '__main__':
-    target_name = 'pan'  # TODO: Enter either dten or pan
-    log_reader('log', target_name)
+    sessionType = 'PTT'
+    log_reader('log', sessionType)

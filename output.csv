@@ -1,2 +1,2 @@
-Utterance,No. of attempts,AVG(ms),MIN(ms),MAX(ms)
-Number 2,3,1587,1508,1680
+Utterance,No. of attempts,Latency list,AVG(ms),MIN(ms),MAX(ms)
+dialog_call_contact,3,"[4212, 2034, 2109]",2785,2034,4212
