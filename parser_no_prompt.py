@@ -49,11 +49,11 @@ def write_csv(latency_list):
 
 
 # function to open log file and perform parsing
-def log_reader(filename, sessionType):
+def log_reader(filename, session_type):
     with open(filename) as f:
         log = f.read()
 
-        if sessionType.lower() == 'wuw':
+        if session_type.lower() == 'wuw':
             block_regex = "PREPARING => STARTING_RECOGNITION[\w\W]*?Scheduled event after flush: N"
         else:
             block_regex = "EVNT GDM NAME=PTT hmi_active_screen[\w\W]*?Scheduled event after flush: N"
@@ -83,5 +83,5 @@ def log_reader(filename, sessionType):
 
 # main function
 if __name__ == '__main__':
-    sessionType = 'PTT'  # TODO: Mention WUW or PTT
-    log_reader('log', sessionType)
+    session_type = 'PTT'  # TODO: Mention WUW or PTT
+    log_reader('log', session_type)
